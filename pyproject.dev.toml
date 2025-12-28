@@ -24,7 +24,3 @@ packages = [{ include = "pip_package_default", from = "src" }]
 
 [tool.uv.sources]
 custom-package = { path = "../custom-package", editable = true }
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"

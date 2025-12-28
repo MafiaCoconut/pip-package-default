@@ -3,13 +3,13 @@
 ## List of commands from Makefile
 .PHONY: dev-mode-on dev-mode-off clean-venv dev-sync-hard deps-mode-on deps-mode-off git-lock git-unlock
 
-# Стандартные настройки
+# Standard settings
 PROD_FILE := pyproject.toml
 DEV_FILE := pyproject.dev.toml
 UV_COMMAND := uv sync
 
 # =================================================================
-# 1. БАЗОВЫЕ ОПЕРАЦИИ (Включение/Выключение режима для текущей папки)
+# 1. Basic Commands (Turn on/off dev mode for current folder)
 # =================================================================
 
 dev-mode-on:
@@ -35,17 +35,17 @@ git-unlock:
 	@git update-index --no-assume-unchanged $(PROD_FILE)
 
 # =================================================================
-# 2. УПРАВЛЕНИЕ ЗАВИСИМОСТЯМИ (Рекурсивный вызов)
+# 2. Dependencies management (Recursive call)
 # =================================================================
 
-# Пробегает по списку путей в переменной LOCAL_DEPS и вызывает там make dev-mode-on
+# Runs through the list of paths in the LOCAL_DEPS and call make dev-mode-on
 deps-mode-on:
 	@$(foreach path,$(LOCAL_DEPS), \
 		echo "🔄 [Deps] Включаем DEV-режим в зависимости: $(path)"; \
 		$(MAKE) -C $(path) dev-mode-on; \
 	)
 
-# Пробегает по списку путей и вызывает make dev-mode-off
+# Runs through the list of paths in the LOCAL_DEPS and call make dev-mode-off
 deps-mode-off:
 	@$(foreach path,$(LOCAL_DEPS), \
 		echo "🔄 [Deps] Выключаем DEV-режим в зависимости: $(path)"; \
@@ -53,7 +53,7 @@ deps-mode-off:
 	)
 
 # =================================================================
-# 3. ГЛАВНАЯ КОМАНДА СИНХРОНИЗАЦИИ (Оркестратор)
+# 3. Main sync command (The orchestrator)
 # =================================================================
 
 dev-sync-hard: clean-venv
